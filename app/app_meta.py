@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from objectpack import desktop
 
-from .actions import UserPack,PermissionPack,ContentTypePack,GroupPack
+from .actions import UserPack, PermissionPack, ContentTypePack, GroupPack
 from .controller import controller
 
 
@@ -21,8 +21,6 @@ def register_actions():
         UserPack(),
         GroupPack(),
         PermissionPack()
-
-
 
     ])
 

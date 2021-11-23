@@ -1,7 +1,7 @@
-from objectpack.ui import BaseEditWindow, make_combo_box
+import objectpack.ui
+from objectpack.ui import BaseEditWindow
 from m3_ext.ui import all_components as ext
 from m3_ext.ui.fields.complex import ExtDictSelectField
-from django.contrib.contenttypes.models import ContentType
 
 
 class UserAddWindow(BaseEditWindow):
@@ -85,9 +85,12 @@ class UserAddWindow(BaseEditWindow):
         self.height = 'auto'
 
 
+class TestPermission(objectpack.ui.BaseListWindow):
+    pass
+
+
 class PermissionAddWindow(BaseEditWindow):
     def _init_components(self):
-
         super(PermissionAddWindow, self)._init_components()
         self.field__name = ext.ExtStringField(
             label=u'Name',
@@ -95,11 +98,13 @@ class PermissionAddWindow(BaseEditWindow):
             allow_blank=False,
             anchor='100%'
         )
+
         self.field__contenttype = ExtDictSelectField(
             label=u'content type',
             name='content_type',
             anchor='100%',
-            url='rr',
+            url='TetstPack',
+            edit_url = 'asda'
             # allow_blank=False,
 
         )
@@ -111,7 +116,6 @@ class PermissionAddWindow(BaseEditWindow):
             allow_blank=False,
         )
 
-
     def _do_layout(self):
         super(PermissionAddWindow, self)._do_layout()
         self.form.items.extend((
@@ -120,16 +124,6 @@ class PermissionAddWindow(BaseEditWindow):
             self.field__codename,
         ))
 
-    def get_list_window_params(self, params, request, context):
-        params = super(PermissionAddWindow, self).get_list_window_params(
-            params, request, context)
-        params.update({
-            'title': u'Right things done by user: %s'
-                     % request.user.username,
-            'height': 800,
-            'width': 600,
-        })
-        return params
     def set_params(self, params):
         super(PermissionAddWindow, self).set_params(params)
         self.height = 'auto'

@@ -1,19 +1,17 @@
 # coding:utf-8
-
-from m3.actions import Action
-from m3.actions.results import OperationResult, JsonResult
+import objectpack.actions
 from objectpack.actions import ObjectPack
-
 from django.contrib.auth.models import User, ContentType, Permission, Group
+from objectpack.ui import ModelEditWindow
+from objectpack.slave_object_pack.actions import SlavePack
 from .ui import UserAddWindow, PermissionAddWindow
-
 
 
 class UserPack(ObjectPack):
     model = User
     add_to_desktop = True
     add_window = edit_window = UserAddWindow
-    # add_window = edit_window = ModelEditWindow.fabricate(model)
+
     columns = [
         {
             'data_index': 'username',
@@ -30,9 +28,11 @@ class UserPack(ObjectPack):
     ]
 
 
+
 class ContentTypePack(ObjectPack):
     model = ContentType
     add_to_desktop = True
+    add_window = edit_window = ModelEditWindow.fabricate(model)
     columns = [
         {
             'data_index': 'app_label',
@@ -48,26 +48,20 @@ class ContentTypePack(ObjectPack):
         }
     ]
 
-    # add_window = edit_window = ModelEditWindow.fabricate(model)
+
+class TetstPack(SlavePack):
+    model = Permission
+
 
 
 class PermissionPack(ObjectPack):
     model = Permission
     add_to_desktop = True
-    add_window = edit_window = PermissionAddWindow
+    add_window = edit_window = ModelEditWindow.fabricate(model)
+    # add_window = edit_window = PermissionAddWindow
 
 
 class GroupPack(ObjectPack):
     model = Group
     add_to_desktop = True
-
-
-class ContentTypeView(Action):
-    url = 'contenttypelist'
-    verbose_name = u'Получение данных'
-    short_name = 'content-type-action-alias'
-
-    def run(self, request, context):
-
-        data = ''
-        return JsonResult(data)
+    add_window = edit_window = ModelEditWindow.fabricate(model)
