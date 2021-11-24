@@ -1,4 +1,3 @@
-import objectpack.ui
 from objectpack.ui import BaseEditWindow
 from m3_ext.ui import all_components as ext
 from m3_ext.ui.fields.complex import ExtDictSelectField
@@ -85,10 +84,6 @@ class UserAddWindow(BaseEditWindow):
         self.height = 'auto'
 
 
-class TestPermission(objectpack.ui.BaseListWindow):
-    pass
-
-
 class PermissionAddWindow(BaseEditWindow):
     def _init_components(self):
         super(PermissionAddWindow, self)._init_components()
@@ -99,14 +94,12 @@ class PermissionAddWindow(BaseEditWindow):
             anchor='100%'
         )
 
-        self.field__contenttype = ExtDictSelectField(
+        self.field__content_type = ExtDictSelectField(
             label=u'content type',
             name='content_type',
             anchor='100%',
-            url='TetstPack',
-            edit_url = 'asda'
-            # allow_blank=False,
-
+            hide_clear_trigger=True,
+            url='#',
         )
 
         self.field__codename = ext.ExtStringField(
@@ -120,10 +113,11 @@ class PermissionAddWindow(BaseEditWindow):
         super(PermissionAddWindow, self)._do_layout()
         self.form.items.extend((
             self.field__name,
-            self.field__contenttype,
+            self.field__content_type,
             self.field__codename,
         ))
 
     def set_params(self, params):
         super(PermissionAddWindow, self).set_params(params)
+
         self.height = 'auto'

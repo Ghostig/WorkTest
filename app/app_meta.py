@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from objectpack import desktop
-
-from .actions import UserPack, PermissionPack, ContentTypePack, GroupPack
+import app.actions
 from .controller import controller
 
 
@@ -17,11 +16,10 @@ def register_actions():
     Регистрация экшен-паков
     """
     return controller.packs.extend([
-        ContentTypePack(),
-        UserPack(),
-        GroupPack(),
-        PermissionPack()
-
+        app.actions.ContentTypePack(),
+        app.actions.UserPack(),
+        app.actions.GroupPack(),
+        app.actions.PermissionPack()
     ])
 
 

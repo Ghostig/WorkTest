@@ -1,16 +1,14 @@
 # coding:utf-8
-import objectpack.actions
 from objectpack.actions import ObjectPack
 from django.contrib.auth.models import User, ContentType, Permission, Group
 from objectpack.ui import ModelEditWindow
-from objectpack.slave_object_pack.actions import SlavePack
-from .ui import UserAddWindow, PermissionAddWindow
+import app.ui
 
 
 class UserPack(ObjectPack):
     model = User
     add_to_desktop = True
-    add_window = edit_window = UserAddWindow
+    add_window = edit_window = app.ui.UserAddWindow
 
     columns = [
         {
@@ -26,7 +24,6 @@ class UserPack(ObjectPack):
             'header': u'Last name',
         }
     ]
-
 
 
 class ContentTypePack(ObjectPack):
@@ -49,16 +46,10 @@ class ContentTypePack(ObjectPack):
     ]
 
 
-class TetstPack(SlavePack):
-    model = Permission
-
-
-
 class PermissionPack(ObjectPack):
     model = Permission
     add_to_desktop = True
-    add_window = edit_window = ModelEditWindow.fabricate(model)
-    # add_window = edit_window = PermissionAddWindow
+    add_window = edit_window = app.ui.PermissionAddWindow
 
 
 class GroupPack(ObjectPack):
