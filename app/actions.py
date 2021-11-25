@@ -3,10 +3,11 @@ from objectpack.actions import ObjectPack
 from django.contrib.auth.models import User, ContentType, Permission, Group
 from objectpack.ui import ModelEditWindow
 import app.ui
+from app.controller import observer
 
 
 class UserPack(ObjectPack):
-    model = User
+    model = Usergit
     add_to_desktop = True
     add_window = edit_window = app.ui.UserAddWindow
 
@@ -30,26 +31,17 @@ class ContentTypePack(ObjectPack):
     model = ContentType
     add_to_desktop = True
     add_window = edit_window = ModelEditWindow.fabricate(model)
-    columns = [
-        {
-            'data_index': 'app_label',
-            'header': 'Label',
-        },
-        {
-            'data_index': 'model',
-            'header': 'Model',
-        },
-        {
-            'data_index': 'name',
-            'header': 'Name',
-        }
-    ]
 
 
 class PermissionPack(ObjectPack):
     model = Permission
+    _is_primary_for_model = True
     add_to_desktop = True
-    add_window = edit_window = app.ui.PermissionAddWindow
+    parents = ['content type']
+    add_window = edit_window = ModelEditWindow.fabricate(
+        model,
+        model_register=observer
+    )
 
 
 class GroupPack(ObjectPack):

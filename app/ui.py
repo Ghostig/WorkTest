@@ -1,6 +1,5 @@
 from objectpack.ui import BaseEditWindow
 from m3_ext.ui import all_components as ext
-from m3_ext.ui.fields.complex import ExtDictSelectField
 
 
 class UserAddWindow(BaseEditWindow):
@@ -81,43 +80,4 @@ class UserAddWindow(BaseEditWindow):
 
     def set_params(self, params):
         super(UserAddWindow, self).set_params(params)
-        self.height = 'auto'
-
-
-class PermissionAddWindow(BaseEditWindow):
-    def _init_components(self):
-        super(PermissionAddWindow, self)._init_components()
-        self.field__name = ext.ExtStringField(
-            label=u'Name',
-            name='name',
-            allow_blank=False,
-            anchor='100%'
-        )
-
-        self.field__content_type = ExtDictSelectField(
-            label=u'content type',
-            name='content_type',
-            anchor='100%',
-            hide_clear_trigger=True,
-            url='#',
-        )
-
-        self.field__codename = ext.ExtStringField(
-            label=u'codename',
-            name='codename',
-            anchor='100%',
-            allow_blank=False,
-        )
-
-    def _do_layout(self):
-        super(PermissionAddWindow, self)._do_layout()
-        self.form.items.extend((
-            self.field__name,
-            self.field__content_type,
-            self.field__codename,
-        ))
-
-    def set_params(self, params):
-        super(PermissionAddWindow, self).set_params(params)
-
         self.height = 'auto'
