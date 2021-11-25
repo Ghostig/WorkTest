@@ -7,7 +7,7 @@ from app.controller import observer
 
 
 class UserPack(ObjectPack):
-    model = Usergit
+    model = User
     add_to_desktop = True
     add_window = edit_window = app.ui.UserAddWindow
 
